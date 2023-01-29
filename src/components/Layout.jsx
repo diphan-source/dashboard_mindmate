@@ -1,9 +1,12 @@
 import React from "react";
+import Navbar from "./Navbar";
 
 const Layout = ({ children }) => {
   return (
     <div className="page-wrapper compact-wrapper" id="pageWrapper">
-      {/* header here */}
+      <div className="page-header">
+        <Navbar />
+      </div>
       <div className="page-body-wrapper">
         <div className="sidebar-wrapper">{/* sidebar here */}</div>
         <div className="page-body">{children}</div>
