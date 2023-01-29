@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import "./App.css";
+import Login from "./pages/Login";
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <h1>Welcome to MindMate</h1>,
+      element: <Login />,
       errorElement: <h1>404 Not Found</h1>,
     },
   ]);
