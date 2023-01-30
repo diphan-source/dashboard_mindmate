@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "./Navbar";
+import Sidebar from "./Sidebar"
 
 const Layout = ({ children }) => {
   return (
@@ -7,8 +8,8 @@ const Layout = ({ children }) => {
       <div className="page-header">
         <Navbar />
       </div>
-      <div className="page-body-wrapper">
-        <div className="sidebar-wrapper">{/* sidebar here */}</div>
+      <div className="page-body-wrapper ">
+        <div className="sidebar-wrapper">{ Sidebar }</div>
         <div className="page-body">{children}</div>
         <footer className="footer">
           <div className="container-fluid">
