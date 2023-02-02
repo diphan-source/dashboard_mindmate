@@ -17,9 +17,6 @@ def therapist_page(request):
 def add_therapist(request):
     required_fields = ['first_name', 'last_name', 'contact', 'organization', 'specialization', 'gender']
     if request.method == 'POST':
-        for field in required_fields:
-            if not request.POST.get(field):
-                return render(request, 'add_therapist.html', {'links': sidebar_menu, 'error': 'All fields are required'})
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         contact = request.POST.get('contact')

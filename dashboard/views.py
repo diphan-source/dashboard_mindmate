@@ -7,6 +7,16 @@ from dashboard.utils import sidebar_menu
 
 # Create your views here.
 
+# create is_logged_in decorator
+def is_logged_in(view_func):
+    def wrapper_func(request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return HttpResponseRedirect('/dashboard')
+        else:
+            return view_func(request, *args, **kwargs)
+    return wrapper_func
+
+
 def home(request):
     return render(request, 'index.html', { 'links': sidebar_menu})
 
@@ -17,6 +27,7 @@ def index(request):
     return HttpResponseRedirect('/dashboard')
 
 
+@is_logged_in
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -36,6 +47,7 @@ def user_login(request):
         return render(request, 'login.html', {})
 
 
+@is_logged_in
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/login')
