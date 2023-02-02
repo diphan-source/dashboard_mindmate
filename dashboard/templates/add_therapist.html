@@ -1,0 +1,97 @@
+{% extends 'base.html' %} 
+{% block title %} Add Therapist {% endblock %} 
+{% block nav %} {% include 'nav.html' %} 
+{% endblock %} 
+{% block sidebar %} 
+{% include 'sidebar.html' %} 
+{% endblock %} 
+{% block body %}
+<div class="container-fluid">
+  <div class="page-title">
+    <div class="row">
+      <div class="col-12 col-sm-6">
+        <h3>Add Therapist</h3>
+      </div>
+      <div class="col-12 col-sm-6">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="/dashboard/"> <i data-feather="home"></i></a>
+          </li>
+          <li class="breadcrumb-item">Therapist</li>
+          <li class="breadcrumb-item active">Add Therapist</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 col-xl-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="card">
+            <div class="card-header pb-0">
+              <h5>Mega form</h5>
+            </div>
+            <div class="card-body">
+              <form id="therapist_form" class="theme-form mega-form" method="post" action="/therapists/add/"> 
+                {% csrf_token %}
+                <h6>Therapist Information</h6>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                      <label class="col-form-label">First Name</label>
+                      <input class="form-control" type="text" placeholder="First Name" />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                      <label class="col-form-label">Last Name</label>
+                      <input class="form-control" type="text" placeholder="Last Name" />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                      <label class="col-form-label">Contact</label>
+                      <input class="form-control" type="text" placeholder="Contact" />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                      <label class="col-form-label">Gender</label>
+                      <input class="form-control" type="text" placeholder="Gender" />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                      <label class="col-form-label">Specialization</label>
+                      <input class="form-control" type="text" placeholder="Specialization" />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                      <label class="col-form-label">Organization</label>
+                      <input class="form-control" type="text" placeholder="Organization" />
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="card-footer">
+              <button type="submit" form="therapist_form" class="btn btn-primary">Submit</button>
+              <button id="cancel_therapist" class="btn btn-secondary">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    document.getElementById("cancel_therapist").addEventListener("click", function(event){
+        event.preventDefault()
+        document.getElementById("therapist_form").reset();
+        window.location.href = "/therapists/";
+    });
+</script>
+{% endblock %}
