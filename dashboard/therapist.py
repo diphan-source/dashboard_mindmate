@@ -23,7 +23,7 @@ def add_therapist(request):
                 missing_fields.append(field)
                 
         if missing_fields:
-            return render(request, 'add_therapist.html', {'links': sidebar_menu, 'error': 'All fields are required'})
+            return render(request, 'add_therapist.html', {'links': sidebar_menu, 'error':  'The following fields are required: {}'.format(', '.join(missing_fields))})
         
         
         first_name = request.POST.get('first_name')
@@ -33,9 +33,6 @@ def add_therapist(request):
         specialization = request.POST.get('specialization')
         gender = request.POST.get('gender')
         
-        # if required_fields not in request.POST:
-        #     return render(request, 'add_therapist.html', {'links': sidebar_menu, 'error': 'All fields are required'})
-
         name = f"{first_name} {last_name}"
 
         existing = Therapist.objects.filter(name=name)
@@ -59,12 +56,37 @@ def add_therapist(request):
 
 @login_required
 def edit_therapist(request, therapist_id):
-    pass
+    details = Therapist.objects.filter(id=therapist_id).first()
+    if not details:
+        return HttpResponseRedirect('/therapists')
+
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        contact = request.POST.get('contact')
+        organization = request.POST.get('organization')
+        specialization = request.POST.get('specialization')
+
+        name = f"{first_name} {last_name}"
+
+        Therapist.objects.filter(id=therapist_id).update(
+            name=name,
+            contact=contact,
+            organization=organization,
+            specialization=specialization
+        )
+        return HttpResponseRedirect('/therapists')
+    else:
+        return render(request, 'edit_therapist.html', {'links': sidebar_menu, 'details': details})
+
 
 
 @login_required
 def delete_therapist(request, therapist_id):
-    pass
+    therapist = Therapist.objects.filter(id=therapist_id).first()
+    if therapist:
+        therapist.delete()      
+    return HttpResponseRedirect('/therapists')
 
 
 @login_required

@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="/static/css/vendors/scrollbar.css">
     <link rel="stylesheet" type="text/css" href="/static/css/vendors/animate.css">
     <link rel="stylesheet" type="text/css" href="/static/css/vendors/date-picker.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/vendors/photoswipe.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/vendors/datatables.css">
     <!-- Plugins css Ends-->
     <!-- Bootstrap css-->
     <link rel="stylesheet" type="text/css" href="/static/css/vendors/bootstrap.css">
@@ -100,18 +100,16 @@
       <script src="/static/js/datepicker/date-picker/datepicker.js"></script>
       <script src="/static/js/datepicker/date-picker/datepicker.en.js"></script>
       <script src="/static/js/datepicker/date-picker/datepicker.custom.js"></script>
-      <script src="/static/js/photoswipe/photoswipe.min.js"></script>
-      <script src="/static/js/photoswipe/photoswipe-ui-default.min.js"></script>
-      <script src="/static/js/photoswipe/photoswipe.js"></script>
-      <script src="/static/js/typeahead/handlebars.js"></script>
-      <script src="/static/js/typeahead/typeahead.bundle.js"></script>
-      <script src="/static/js/typeahead/typeahead.custom.js"></script>
-      <script src="/static/js/typeahead-search/handlebars.js"></script>
-      <script src="/static/js/typeahead-search/typeahead-custom.js"></script>
       <script src="/static/js/height-equal.js"></script>
+      <script src="/static/js/datatable/datatables/jquery.dataTables.min.js"></script>
       <!-- Plugins JS Ends-->
       <!-- Theme js-->
       <script src="/static/js/script.js"></script>
       <script src="/static/js/theme-customizer/customizer.js"></script>
+      <script>
+        $(document).ready(function() {
+            $('#therapist').DataTable();
+        } );
+      </script>
   </body>
   </html>
