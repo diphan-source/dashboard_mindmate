@@ -1,0 +1,87 @@
+{% extends 'base.html' %} 
+
+{% block title %} Edit Mental Health Resources {% endblock %}
+
+{% block nav %} 
+{% include 'nav.html' %} 
+{% endblock %} 
+{% block sidebar %} 
+{% include 'sidebar.html' %} 
+{% endblock %} 
+{% block body %}
+<div class="container-fluid">
+    <div class="page-title">
+      <div class="row">
+        <div class="col-12 col-sm-6">
+          <h3>Edit Mental Health Resource</h3>
+        </div>
+        <div class="col-12 col-sm-6">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="/dashboard/"> <i data-feather="home"></i></a>
+            </li>
+            <li class="breadcrumb-item">Mental Health Resource</li>
+            <li class="breadcrumb-item active">Add Mental Health Resource</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12 col-xl-12">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card">
+              <div class="card-header pb-0">
+                  <h6>Mental Health Resource Information</h6>
+              </div>
+              <div class="card-body">
+                <form id="resource_form" class="theme-form mega-form" method="post" action="/resources/edit/{{ resource.id }}/">
+                  {% csrf_token %}
+                  {% if error %}
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Error!</strong> {{ error }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                  {% endif %}
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="col-form-label">Resource Name</label>
+                        <input class="form-control" type="text" placeholder="Resource Name" name="name" value="{{ resource.name}}" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="col-form-label">Resource Description</label>
+                        <input class="form-control" type="text" placeholder="Resource Description" name="description" value="{{ resource.description }}" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="col-form-label">Website</label>
+                        <input class="form-control" type="url" placeholder="https://www.google.com" name="website" value="{{ resource.website }}" />
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="card-footer">
+                <button type="submit" form="resource_form" class="btn btn-primary">Submit</button>
+                <button id="cancel_resource" class="btn btn-secondary">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+      document.getElementById("cancel_resource").addEventListener("click", function(event){
+          event.preventDefault()
+          document.getElementById("resource_form").reset();
+          window.location.href = "/resources/";
+      });
+  </script>
+{% endblock %}
