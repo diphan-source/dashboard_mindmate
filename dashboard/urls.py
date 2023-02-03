@@ -4,6 +4,7 @@ from dashboard import views
 from dashboard import therapist
 from dashboard import psychiatrist
 from dashboard import mh_provider
+from dashboard import resource
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -23,4 +24,8 @@ urlpatterns = [
     path('providers/add/', mh_provider.add_provider, name='add_provider'),
     path('providers/edit/<int:provider_id>/', mh_provider.edit_provider, name='edit_provider'),
     path('providers/delete/<int:provider_id>/', mh_provider.delete_provider, name='delete_provider'),
+    path('resources/', resource.resource_page, name='resources'),
+    path('resources/add/', resource.resource_add, name='add_resource'),
+    path('resources/edit/<int:resource_id>/', resource.resource_edit, name='edit_resource'),
+    path('resources/delete/<int:resource_id>/', resource.resource_delete, name='delete_resource'),
 ]
