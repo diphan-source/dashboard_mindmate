@@ -3,6 +3,7 @@ from django.urls import path
 from dashboard import views
 from dashboard import therapist
 from dashboard import psychiatrist
+from dashboard import mh_provider
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -18,4 +19,8 @@ urlpatterns = [
     path('psychiatrists/add/', psychiatrist.add_psychiatrist, name='add_psychiatrist'),
     path('psychiatrists/edit/<int:psychiatrist_id>/', psychiatrist.edit_psychiatrist, name='edit_psychiatrist'),
     path('psychiatrists/delete/<int:psychiatrist_id>/', psychiatrist.delete_psychiatrist, name='delete_psychiatrist'),
+    path('providers/', mh_provider.mental_health_provider_page, name='providers'),
+    path('providers/add/', mh_provider.add_provider, name='add_provider'),
+    path('providers/edit/<int:provider_id>/', mh_provider.edit_provider, name='edit_provider'),
+    path('providers/delete/<int:provider_id>/', mh_provider.delete_provider, name='delete_provider'),
 ]
