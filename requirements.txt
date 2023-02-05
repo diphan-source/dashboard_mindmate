@@ -1,5 +1,6 @@
 asgiref
 Django
+gunicorn
 mysqlclient
 Pillow
 PyMySQL
