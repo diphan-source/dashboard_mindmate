@@ -1,0 +1,100 @@
+{% extends 'base.html' %} 
+{% block title %} Psychiatrists {% endblock %} 
+{% block nav %} 
+{% include 'nav.html' %} 
+{% endblock %} 
+{% block sidebar %} 
+{% include 'sidebar.html' %} 
+{% endblock %} 
+{% block body %}
+<div class="container-fluid">
+    <div class="page-title">
+      <div class="row">
+        <div class="col-12 col-sm-6">
+          <h3>Psychiatrists</h3>
+        </div>
+        <div class="col-12 col-sm-6">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="/psychiatrists/">
+                <i data-feather="home"></i>
+              </a>
+            </li>
+            <li class="breadcrumb-item">Dashboard</li>
+            <li class="breadcrumb-item active">Psychiatrists</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+      <div class="row project-cards">
+        <div class="col-md-12 project-list">
+          <div class="card">
+            <div class="row">
+              <div class="col-md-6 p-0">
+  
+              </div>
+              <div class="col-md-6 p-0">
+                <div class="form-group mb-0 me-0"></div>
+                <a class="btn btn-primary" href="add/">
+                  <i data-feather="plus-square"></i>
+                  Create New 
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="card">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="table-responsive">
+                          <table class="table table-hover" id="psychiatrist">
+                              <thead>
+                                  <tr>
+                                      <th scope="col">ID</th>
+                                      <th scope="col">Name</th>
+                                      <th scope="col">Contact</th>
+                                      <th scope="col">Gender</th>
+                                      <th scope="col">Organization</th>
+                                      <th scope="col">Specialization</th>
+                                      <th scope="col">Action</th>
+                                  </tr>
+                              </thead> 
+                              <tbody>
+                                  {% if psychiatrists %}
+                                     {% for psychiatrist in psychiatrists %}
+                                      <tr>
+                                          <th scope="row">{{ psychiatrist.id }}</th>
+                                          <td>{{ psychiatrist.name }}</td>
+                                          <td>{{ psychiatrist.contact}}</td>
+                                          <td>{{ psychiatrist.gender }}</td>
+                                          <td>{{ psychiatrist.organization }}</td>
+                                          <td>{{ psychiatrist.specialization }}</td>
+                                          <td>
+                                              <a href="edit/{{ psychiatrist.id }}" class="btn btn-primary btn-xs">
+                                                  <i data-feather="edit"></i>
+                                              </a>
+                                              <a href="delete/{{ psychiatrist.id }}" class="btn btn-danger btn-xs">
+                                                  <i data-feather="trash"></i>
+                                              </a>
+                                          </td>
+                                      </tr>
+                                      {% endfor %}
+                                  {% else %}
+                                      <tr>
+                                          <td colspan="7">No Psychiatrists Found</td>
+                                      </tr>
+                                  {% endif %}
+                              </tbody>       
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

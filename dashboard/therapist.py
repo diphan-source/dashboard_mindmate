@@ -56,28 +56,34 @@ def add_therapist(request):
 
 @login_required
 def edit_therapist(request, therapist_id):
+    required_fields = ['first_name', 'last_name', 'contact', 'organization', 'specialization']
+    missing_fields = []
     details = Therapist.objects.filter(id=therapist_id).first()
     if not details:
         return HttpResponseRedirect('/therapists')
 
+    details.first_name = details.name.split(' ')[0]
+    details.last_name = details.name.split(' ')[1]
+    
     if request.method == 'POST':
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        contact = request.POST.get('contact')
-        organization = request.POST.get('organization')
-        specialization = request.POST.get('specialization')
 
-        name = f"{first_name} {last_name}"
+        for field in required_fields:
+            if not request.POST.get(field) or request.POST.get(field) == '':
+                missing_fields.append(field)
+
+        if len(missing_fields) > 0:
+            return render(request, 'edit_therapist.html', {'links': sidebar_menu, 'error':  'The following fields are required: {}'.format(', '.join(missing_fields)), 'therapist': details})
+            
 
         Therapist.objects.filter(id=therapist_id).update(
-            name=name,
-            contact=contact,
-            organization=organization,
-            specialization=specialization
+            name=f"{request.POST.get('first_name')} {request.POST.get('last_name')}",
+            contact=request.POST.get('contact'),
+            organization=request.POST.get('organization'),
+            specialization=request.POST.get('specialization'),
         )
         return HttpResponseRedirect('/therapists')
-    else:
-        return render(request, 'edit_therapist.html', {'links': sidebar_menu, 'details': details})
+    
+    return render(request, 'edit_therapist.html', {'links': sidebar_menu, 'therapist': details})
 
 
 

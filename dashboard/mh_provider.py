@@ -2,8 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
+from ussd.models import MentalHealthProvider
 from dashboard.utils import sidebar_menu
-from models import MentalHealthProvider
 
 
 @login_required
@@ -42,11 +42,9 @@ def add_provider(request):
             website=website
         )
         
-        MentalHealthProvider.save()
-        
         return HttpResponseRedirect('/providers')
-    else:
-        return render(request, 'add_provider.html', {'links': sidebar_menu})
+    
+    return render(request, 'add_provider.html', {'links': sidebar_menu})
     
 @login_required
 def edit_provider(request, provider_id):

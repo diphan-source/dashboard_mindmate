@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block title %} Add Mental Health Provider {% endblock %}
+{% block nav %}
+{% include 'nav.html' %}
+{% endblock %}
+{% block sidebar %}
+{% include 'sidebar.html' %}
+{% endblock %}
+{% block body %}
+<div class="container-fluid">
+    <div class="page-title">
+      <div class="row">
+        <div class="col-12 col-sm-6">
+          <h3>Add Mental Health Provider</h3>
+        </div>
+        <div class="col-12 col-sm-6">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="/dashboard/"> <i data-feather="home"></i></a>
+            </li>
+            <li class="breadcrumb-item">M.H. Providers</li>
+            <li class="breadcrumb-item active">Add Provider</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12 col-xl-12">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card">
+              <div class="card-header pb-0">
+                  <h6>Mental Health Provider Information</h6>
+              </div>
+              <div class="card-body">
+                <form id="provider_form" class="theme-form mega-form" method="post" action="/providers/add/"> 
+                  {% csrf_token %}
+                  {% if error %}
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Error!</strong> {{ error }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                  {% endif %}
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="col-form-label">Organization Name</label>
+                        <input class="form-control" type="text" placeholder="Organization Name" name="name" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="col-form-label">Contact</label>
+                        <input class="form-control" type="text" placeholder="Contact" name="contact" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="col-form-label">Fields</label>
+                        <input class="form-control" type="text" placeholder="Fields"  name="field"/>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="col-form-label">Website</label>
+                        <input class="form-control" type="url" placeholder="https://www.example.com" name="website" />
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="card-footer">
+                <button type="submit" form="provider_form" class="btn btn-primary">Submit</button>
+                <button id="cancel_provider" class="btn btn-secondary">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+      document.getElementById("cancel_provider").addEventListener("click", function(event){
+          event.preventDefault()
+          document.getElementById("provider_form").reset();
+          window.location.href = "/providers/";
+      });
+  </script>
+{% endblock %}

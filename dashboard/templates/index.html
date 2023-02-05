@@ -8,3 +8,64 @@
 {% block sidebar %}
 {% include "sidebar.html" %}
 {% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+  <div class="page-title">
+    <div class="row">
+      <div class="col-12 col-sm-6">
+        <h3>Dashboard</h3>
+      </div>
+      <div class="col-12 col-sm-6">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a class="home-item" href="index.html">
+              <i data-feather="home"></i>
+            </a>
+          </li>
+          <li class="breadcrumb-item">Dashboard</li>
+          <li class="breadcrumb-item active">Default</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid default-dash">
+    <div class="row">
+        <div class="col-xl-6 col-md-6 dash-xl-50">
+            <div class="card profile-greeting">
+                <div class="card-body">
+                <div class="media">
+                    <div class="media-body">
+                    <div class="greeting-user">
+                        <h1>Hello, {{ user.email }}</h1>
+                        <p>Welcome back, your dashboard is ready!</p>
+                        <a class="btn btn-outline-white_color" href="/dashboard/">
+                            Get Started
+                        <i class="icon-arrow-right"></i>
+                    </a>
+                    </div>
+                    </div>
+                </div>
+    
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 dash-xl-50">
+            <div class="card pb-0 o-hidden earning-card">
+                <div class="card-header earning-back"></div>
+                  <div class="card-body p-0">
+                    <div class="earning-content" style="position: relative;">
+                        <a href="#"><h4>USSD Usage</h4></a>
+                        <h6>{{ ussd_today }}</h6>
+                        <div id="user-activity"></div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+
+{% endblock %}
