@@ -82,7 +82,7 @@ def edit_therapist(request, therapist_id):
 
 
 @login_required
-def delete_therapist(request, therapist_id):
+def delete_therapist(therapist_id):
     therapist = Therapist.objects.filter(id=therapist_id).first()
     if therapist:
         therapist.delete()      

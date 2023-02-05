@@ -2,11 +2,14 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
+from dashboard.utils import sidebar_menu
+from models import MentalHealthProvider
+
 
 @login_required
 def mental_health_provider_page(request):
     mh_providers = MentalHealthProvider.objects.all()
-    return render(request, 'mh_provider.html', {'links': sidebar_menu, 'mh_providers': mental_health_providers})
+    return render(request, 'mh_provider.html', {'links': sidebar_menu, 'mh_providers': mh_providers})
 
 
 @login_required
@@ -70,9 +73,11 @@ def edit_provider(request, provider_id):
     
     
 @login_required
-def delete_provider(request, provider_id):
+def delete_provider(provider_id):
     details = MentalHealthProvider.objects.filter(id=provider_id).first()
     if details:
         details.delete()
     return HttpResponseRedirect('/providers')
+
+
 
