@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-w=08#+n9^w6pcjem$!3vof_aepgew784vw(rr59k^i*t_xb-_w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mindmate.onrender.com']
 
 AUTH_USER_MODEL = 'dashboard.User'
 
@@ -80,8 +80,12 @@ WSGI_APPLICATION = 'mindmate.wsgi.application'
 
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'mindmate',
+#         'USER': 'mindmate',
+#         'PASSWORD': '1ghhxWdD1g7B09WqzvX92yguavnncSUn',
+#         'HOST': 'dpg-cfga5a1a6gdma8n52sk0-a.oregon-postgres.render.com',
+#         'PORT': '5432',
 #     }
 # }
 
