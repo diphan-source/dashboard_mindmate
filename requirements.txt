@@ -1,9 +1,9 @@
-asgiref==3.6.0
+asgiref
 Django
+gunicorn
 mysqlclient
 Pillow
-psycopg
+psycopg2
 PyMySQL
 sqlparse
-typing_extensions
 tzdata
