@@ -4,5 +4,5 @@ sidebar_menu = [
         {'name': 'Resources', 'url': '/resources/', 'icon': 'book'},
         {'name': 'M.H Providers', 'url': '/providers/', 'icon': 'heart'},
         {'name': 'Psychiatrists', 'url': '/psychiatrists/', 'icon': 'user'},
-        {'name': 'Settings', 'url': '/settings/', 'icon': 'settings'},
+        # {'name': 'Settings', 'url': '/settings/', 'icon': 'settings'},
     ]
