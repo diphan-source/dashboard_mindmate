@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-w=08#+n9^w6pcjem$!3vof_aepgew784vw(rr59k^i*t_xb-_w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mindmate.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['mindmate.onrender.com','mentalhealth-03w5.onrender.com', 'localhost', '127.0.0.1']
 
 AUTH_USER_MODEL = 'dashboard.User'
 
