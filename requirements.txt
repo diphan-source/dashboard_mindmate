@@ -3,6 +3,7 @@ Django
 gunicorn
 mysqlclient
 Pillow
+psycopg2
 PyMySQL
 sqlparse
 tzdata
