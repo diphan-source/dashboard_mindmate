@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 from dashboard.utils import sidebar_menu
@@ -32,9 +33,7 @@ def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('login[password]')
-        print(f"username: {username}, password: {password}")
         user = authenticate(email=username, password=password)
-        print(f"User: {user}")
         if user:
             if user.is_active:
                 login(request, user)
@@ -47,7 +46,7 @@ def user_login(request):
         return render(request, 'login.html', {})
 
 
-@is_logged_in
+@login_required
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/login')
