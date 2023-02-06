@@ -16,7 +16,7 @@ GO_BACK = "0"
 @method_decorator(csrf_exempt, name='dispatch')
 class UssdView(View):
     def get(self, request):
-        return JsonResponse({'status': 'success'})
+        return JsonResponse({'status': 'success , Ussd in production Your MentalHealth Matters'})
 
     def post(self, request):
         self.request = request
