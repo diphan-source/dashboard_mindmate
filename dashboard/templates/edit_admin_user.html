@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %} Editing {{user.username}} {% endblock %}
+
+{% block nav %}
+{% include 'nav.html' %}
+{% endblock %}
+
+{% block sidebar %}
+{% include 'sidebar.html' %}
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="page-title">
+      <div class="row">
+        <div class="col-12 col-sm-6">
+          <h3>Edit User</h3>
+        </div>
+        <div class="col-12 col-sm-6">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="/dashboard/"> <i data-feather="home"></i></a>
+            </li>
+            <li class="breadcrumb-item">User</li>
+            <li class="breadcrumb-item active">Add User</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12 col-xl-12">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card">
+              <div class="card-header pb-0">
+                  <h6>User Information</h6>
+              </div>
+              <div class="card-body">
+                <form id="user_form" class="theme-form mega-form" method="post" action="/admin_users/edit/{{ user.id }}/"> 
+                  {% csrf_token %}
+                  {% if error %}
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Error!</strong> {{ error }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                  {% endif %}
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="col-form-label">First Name</label>
+                        <input class="form-control" type="text" placeholder="First Name" name="first_name" value="{{ user.first_name }}" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="col-form-label">Last Name</label>
+                        <input class="form-control" type="text" placeholder="Last Name" name="last_name" value="{{ user.last_name }}" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="col-form-label">Email</label>
+                        <input class="form-control" type="email" placeholder="johdoe@example.com" name="email" value="{{ user.email }}" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="col-form-label">Username</label>
+                        <input class="form-control" type="text" placeholder="Username"  name="username" value="{{ user.username }}" />
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="card-footer">
+                <button type="submit" form="user_form" class="btn btn-primary">Submit</button>
+                <button id="cancel_user" class="btn btn-secondary">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+      document.getElementById("cancel_user").addEventListener("click", function(event){
+          event.preventDefault()
+          document.getElementById("user_form").reset();
+          window.location.href = "/admin_users/";
+      });
+  </script>
+
+
+{% endblock %}
