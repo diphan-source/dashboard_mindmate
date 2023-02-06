@@ -8,6 +8,7 @@ from dashboard import resource
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('dashboard/index.html', views.index , name='index'),
     path('dashboard/', views.home, name='home'),
     path('login/', views.user_login, name='login'), 
     path('logout/', views.user_logout, name='logout'), 
