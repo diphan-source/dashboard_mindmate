@@ -9,7 +9,7 @@ from django.utils.decorators import method_decorator
 
 
 # Create your views here.
-from ussd.models import SessionTrack, Resource, Therapist, Psychiatrists
+from ussd.models import SessionTrack, Resource, Therapist, Psychiatrists, MentalHealthProvider
 
 GO_BACK = "0"
 
@@ -99,5 +99,43 @@ class UssdView(View):
             response += f"{therapist.id}. {therapist.name}\n"
 
         response += f"{GO_BACK}. Go Back"
+
+        return response
+
+
+    def get_exit(self):
+        response = "END Thank you for using MindMate"
+
+        return response
+
+
+    def get_psychiatrists(self):
+        psychiatrists = Psychiatrists.objects.all()
+        response = "CON Select a psychiatrist\n"
+
+        for psychiatrist in psychiatrists:
+            response += f"{psychiatrist.id}. {psychiatrist.name}\n"
+
+        response += f"{GO_BACK}. Go Back"
+
+        return response
+
+    def get_mental_health_providers(self):
+        mental_health_providers = MentalHealthProvider.objects.all()
+        response = "CON Select a mental health provider\n"
+
+        for mental_health_provider in mental_health_providers:
+            response += f"{mental_health_provider.id}. {mental_health_provider.name}\n"
+
+        response += f"{GO_BACK}. Go Back"
+
+        return response
+
+    
+    def handle_therapist(self):
+        therapist = Therapist.objects.filter(id=self.text.split('*')[-1]).first()
+        response = "END You can contact the therapist on the following details\n"
+        response += f"Name: {therapist.name}\n"
+        response += f"Phone Number: {therapist.contact}\n"
 
         return response
