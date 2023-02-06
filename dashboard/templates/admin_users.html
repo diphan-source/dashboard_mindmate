@@ -41,10 +41,17 @@
               </div>
               <div class="col-md-6 p-0">
                 <div class="form-group mb-0 me-0"></div>
-                <a class="btn btn-primary" href="add/">
+                {% if request.user.is_superuser %}
+                <a class="btn btn-primary"  href="add/">
                   <i data-feather="plus-square"></i>
                   Create New 
                 </a>
+                {% else %}
+                <a class="btn btn-primary disabled"  href="add/">
+                  <i data-feather="plus-square"></i>
+                  Create New
+                </a>
+                {% endif %}
               </div>
             </div>
           </div>
@@ -75,12 +82,20 @@
                                           <td>{{ user.first_name }}</td>
                                           <td>{{ user.last_name }}</td>
                                           <td>
+                                              <!-- disable edit on other users only allow for current user and as well as user if super admin -->
+                                              {% if user.id == request.user.id %}
                                               <a href="edit/{{ user.id }}" class="btn btn-primary btn-xs">
                                                   <i data-feather="edit"></i>
+                                              </a>
+                                              {% elif request.user.is_superuser and user.id != request.user.id %}
+                                              <a href="edit/{{ user.id }}" class="btn btn-primary btn-xs">
+                                                <i data-feather="edit"></i>
                                               </a>
                                               <a href="delete/{{ user.id }}" class="btn btn-danger btn-xs">
                                                   <i data-feather="trash"></i>
                                               </a>
+                                              {% endif %}
+
                                           </td>
                                       </tr>
                                       {% endfor %}
