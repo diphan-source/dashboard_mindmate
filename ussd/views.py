@@ -6,11 +6,11 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 
-
+import africastalking
 
 # Create your views here.
 from ussd.models import SessionTrack, Resource, Therapist, Psychiatrists, MentalHealthProvider
-
+from ussd.sms import send_sms
 GO_BACK = "0"
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -57,7 +57,7 @@ class UssdView(View):
         session_track = SessionTrack.objects.filter(session_id=self.session_id).first()
 
         if session_track is None:
-            session_track = SessionTrack(session_id=self.session_id, phone_number=self.phone_number, menu_selection=menu_selection)
+            session_track = SessionTrack(session_id=self.session_id, phone_number=self.phone_number, menu_selection=menu_selection ,flag = 0)
             session_track.save()
         else:
             session_track.menu_selection = menu_selection
@@ -83,13 +83,22 @@ class UssdView(View):
     def get_resources(self):
         resources = Resource.objects.all()
         response = "CON Select a resource\n"
-
-        for resource in resources:
-            response += f"{resource.id}. {resource.name}\n"
-
-        response += f"{GO_BACK}. Go Back"
+        response += "1. Mental Health Management Tips\n"
+        response += "2. Hotlines\n"
+        response += "3. online Resources\n"
+        
+        for res in response:
+            if res == 1:
+                for resource in resources:
+                    response = f"{resource.id}. {resource.description}\n"
+                    print(response)
+                return send_sms("Hello, Thank you for using MindMate and we are here for you {response}", self.phone_number)
+      
+            response += f"{GO_BACK}. Go Back"
 
         return response
+    
+
 
     def get_therapists(self):
         therapists = Therapist.objects.all()
@@ -139,3 +148,4 @@ class UssdView(View):
         response += f"Phone Number: {therapist.contact}\n"
 
         return response
+

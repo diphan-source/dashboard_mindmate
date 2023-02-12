@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-w=08#+n9^w6pcjem$!3vof_aepgew784vw(rr59k^i*t_xb-_w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['mindmate.onrender.com','mentalhealth-03w5.onrender.com']
+ALLOWED_HOSTS = ['mindmate.onrender.com','mentalhealth-03w5.onrender.com','localhost']
 
 AUTH_USER_MODEL = 'dashboard.User'
 
@@ -78,16 +78,18 @@ WSGI_APPLICATION = 'mindmate.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'mindmate',
-#         'USER': 'mindmate',
-#         'PASSWORD': '1ghhxWdD1g7B09WqzvX92yguavnncSUn',
-#         'HOST': 'dpg-cfga5a1a6gdma8n52sk0-a.oregon-postgres.render.com',
-#         'PORT': '5432',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'mindmate',
+        'USER': 'mindmate',
+        'PASSWORD': 'PgXQejLB79ch9W0un5kyc58zzpstgiAJ',
+        'HOST': 'dpg-cfgd5k82i3mg6pc970rg-a.oregon-postgres.render.com',
+        'PORT': '5432',
+    }
+}
+
+
 
 DATABASES = {
     'default': {
