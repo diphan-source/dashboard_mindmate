@@ -80,36 +80,75 @@ class UssdView(View):
 
         return response
 
-    def get_resources(self):
+    def get_resources(self ,text= "", flag = 0):
         resources = Resource.objects.all()
         response = "CON Select a resource\n"
         response += "1. Mental Health Management Tips\n"
         response += "2. Hotlines\n"
         response += "3. online Resources\n"
+        response += f"{GO_BACK}. Back\n"
         
-        for res in response:
-            if res == 1:
-                for resource in resources:
-                    response = f"{resource.id}. {resource.description}\n"
-                    print(response)
-                return send_sms("Hello, Thank you for using MindMate and we are here for you {response}", self.phone_number)
-      
-            response += f"{GO_BACK}. Go Back"
-
-        return response
+        if text == '1':
+            for resource in resources:
+                response = "END Mental Health Management Tips\n"
+                response += f"{resource.id}. {resource.description}\n"
+                send_sms("Hello, Thank you for using MindMate and we are here for you {response}", self.phone_number)
+            return response
+        
+        elif text == '2':
+            for resource in resources:
+                response = "END Hotlines\n"
+                response += f"{resource.id}. {resource.description}\n"
+                send_sms("Hello, Thank you for using MindMate and we are here for you {response}", self.phone_number)
+            return response
+            
+        elif text == '3':
+            for resource in resources:
+                response = "END Online Resources\n"
+                response += f"{resource.id}. {resource.description}\n"
+                send_sms("Hello, Thank you for using MindMate and we are here for you {response}", self.phone_number)
+            return response
+        else:
+            
+            return response
     
 
 
-    def get_therapists(self):
+    def get_therapists(self ,text= "" , flag = 2):
         therapists = Therapist.objects.all()
         response = "CON Select a therapist\n"
+        response += "1. Counselling\n"
+        response += "2. Psychotherapy\n"
+        response += "3. Art Therapy\n"
+        response += f"{GO_BACK}. Back\n"
+        
+        
+        if text == '1':
+            for therapist in therapists:
+                response = "END Counselling\n"
+                response += f"{therapist.id}. {therapist.name} + : + {therapist.contact}\n"
+                send_sms("Hello, Thank you for using MindMate and we are here for you {response}", self.phone_number)
+            return response
+        elif text == '2':
+            for therapist in therapists:
+                response = "END Psychotherapy\n"
+                response += f"{therapist.id}. {therapist.name} + : + {therapist.contact}\n"
+                send_sms("Hello, Thank you for using MindMate and we are here for you {response}", self.phone_number)
+            return response
+        elif text == '3':
+            for therapist in therapists:
+                response = "END Art Therapy\n"
+                response += f"{therapist.id}. {therapist.name} + : + {therapist.contact}\n"
+                send_sms("Hello, Thank you for using MindMate and we are here for you {response}", self.phone_number)
+            return response
+        else :
+            return response
+        # for therapist in therapists:
+        #     response += f"{therapist.id}. {therapist.name}\n"
 
-        for therapist in therapists:
-            response += f"{therapist.id}. {therapist.name}\n"
+        # response += f"{GO_BACK}. Go Back"
 
-        response += f"{GO_BACK}. Go Back"
-
-        return response
+        # return response
 
 
     def get_exit(self):
@@ -118,20 +157,43 @@ class UssdView(View):
         return response
 
 
-    def get_psychiatrists(self):
+    def get_psychiatrists(self , text="" , flag = 2):
         psychiatrists = Psychiatrists.objects.all()
         response = "CON Select a psychiatrist\n"
+        response += "1. Male \n"
+        response += "2. Female \n"
+        response += f"{GO_BACK}. Back\n"
+        
+        if text == "1":
+            for psychiatrist in psychiatrists:
+                response = "END Male psychiatrist\n"
+                if psychiatrist.id == 1:
+                    response += f"{psychiatrist.name} + : + {psychiatrist.contact}\n"
+                    send_sms("Hello, Thank you for using MindMate and we are here for you {response}", self.phone_number)
+            return response
+        elif text == "2":
+            response = "END Female psychiatrist \n"
+            for psychiatrist in psychiatrists:
+                if psychiatrist.id == 2:
+                    response += f"{psychiatrist.name} + : + {psychiatrist.contact}\n"
+                    send_sms("Hello, Thank you for using MindMate and we are here for you {response}", self.phone_number)
+            return response
+        else :
+            return response
+        # for psychiatrist in psychiatrists:
+        #     response += f"{psychiatrist.id}. {psychiatrist.name}\n"
 
-        for psychiatrist in psychiatrists:
-            response += f"{psychiatrist.id}. {psychiatrist.name}\n"
+        # response += f"{GO_BACK}. Go Back"
 
-        response += f"{GO_BACK}. Go Back"
-
-        return response
+        # return response
 
     def get_mental_health_providers(self):
         mental_health_providers = MentalHealthProvider.objects.all()
         response = "CON Select a mental health provider\n"
+        response += "1. Counselling\n"
+        response += "2. Treatment\n"
+        response += "3. Support\n"
+        response += f"{GO_BACK}. Back\n"
 
         for mental_health_provider in mental_health_providers:
             response += f"{mental_health_provider.id}. {mental_health_provider.name}\n"
@@ -148,4 +210,30 @@ class UssdView(View):
         response += f"Phone Number: {therapist.contact}\n"
 
         return response
+    
+    def handle_psychiatrist(self):
+        psychiatrist = Psychiatrists.objects.filter(id=self.text.split('*')[-1]).first()
+        response = "END You can contact the psychiatrist on the following details\n"
+        response += f"Name: {psychiatrist.name}\n"
+        response += f"Phone Number: {psychiatrist.contact}\n"
+
+        return response
+    
+    def handle_mental_health_provider(self):
+        mental_health_provider = MentalHealthProvider.objects.filter(id=self.text.split('*')[-1]).first()
+        response = "END You can contact the mental health provider on the following details\n"
+        response += f"Name: {mental_health_provider.name}\n"
+        response += f"Phone Number: {mental_health_provider.contact}\n"
+
+        return response
+    
+    def handle_resource(self):
+        resource = Resource.objects.filter(id=self.text.split('*')[-1]).first()
+        response = "END You can access the resource on the following details\n"
+        response += f"Name: {resource.description}\n"
+        response += f"Link: {resource.link}\n"
+
+        return response
+    
+
 
