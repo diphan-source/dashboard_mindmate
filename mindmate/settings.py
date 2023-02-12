@@ -83,24 +83,24 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'mindmate',
         'USER': 'mindmate',
-        'PASSWORD': 'PgXQejLB79ch9W0un5kyc58zzpstgiAJ',
-        'HOST': 'dpg-cfgd5k82i3mg6pc970rg-a.oregon-postgres.render.com',
+        'PASSWORD': '1ghhxWdD1g7B09WqzvX92yguavnncSUn',
+        'HOST': 'dpg-cfga5a1a6gdma8n52sk0-a.oregon-postgres.render.com',
         'PORT': '5432',
     }
 }
 
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mindmate',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'mindmate',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
 
 # Password validation
