@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-w=08#+n9^w6pcjem$!3vof_aepgew784vw(rr59k^i*t_xb-_w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['mindmate.onrender.com','mentalhealth-03w5.onrender.com','localhost']
+ALLOWED_HOSTS = ['mindmate.onrender.com','mentalhealth-03w5.onrender.com', 'localhost', '127.0.0.1']
 
 AUTH_USER_MODEL = 'dashboard.User'
 
@@ -88,8 +88,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
-
 
 # DATABASES = {
 #     'default': {
