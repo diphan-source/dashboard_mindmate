@@ -35,10 +35,30 @@ class UssdView(View):
         return '*'.join(data)
 
     def get_response(self):
+        session_track = SessionTrack.objects.filter(session_id=self.session_id).first()
+
+        if session_track is None:
+            session_track = SessionTrack(session_id=self.session_id, phone_number=self.phone_number, menu_selection=self.text, flag=0)
+            session_track.save()
+        else:
+            session_track.menu_selection = self.text
+            session_track.flag = 0
+            session_track.save()
+
         if self.text == "":
             self.response = self.get_home()
-        else:
-            self.response = self.get_menu()
+        elif self.text == "1":
+            self.response = self.get_resources()
+        elif self.text == "2":
+            self.response = self.get_therapists()
+        elif self.text == "3":
+            self.response = self.get_psychiatrists()
+        elif self.text == "4":
+            self.response = self.get_mental_health_providers()
+        elif self.text == "5":
+            self.response = self.get_exit()
+        elif self.text == "1*1":
+            self.response = self.handle_resource()
 
         return HttpResponse(self.response, content_type='text/plain')
 
@@ -52,33 +72,6 @@ class UssdView(View):
 
         return response
 
-    def get_menu(self):
-        menu_selection = self.text.split('*')[-1]
-        session_track = SessionTrack.objects.filter(session_id=self.session_id).first()
-
-        if session_track is None:
-            session_track = SessionTrack(session_id=self.session_id, phone_number=self.phone_number, menu_selection=menu_selection ,flag = 0)
-            session_track.save()
-        else:
-            session_track.menu_selection = menu_selection
-            session_track.save()
-
-        if menu_selection == "1":
-            response = self.get_resources()
-        elif menu_selection == "2":
-            response = self.get_therapists()
-        elif menu_selection == "3":
-            response = self.get_psychiatrists()
-        elif menu_selection == "4":
-            response = self.get_mental_health_providers()
-        elif menu_selection == "5":
-            response = self.get_exit()
-        elif menu_selection == GO_BACK:
-            response = self.get_home()
-        else:
-            response = self.get_home()
-
-        return response
 
     def get_resources(self ,text= "", flag = 0):
         resources = Resource.objects.all()
@@ -229,9 +222,13 @@ class UssdView(View):
     
     def handle_resource(self):
         resource = Resource.objects.filter(id=self.text.split('*')[-1]).first()
+        if resource is None:
+            return "END Sorry, we could not find the resource you are looking for"
+
+        send_sms(f"Hello, Thank you for using MindMate and we are here for you {resource.description}", self.phone_number)
         response = "END You can access the resource on the following details\n"
         response += f"Name: {resource.description}\n"
-        response += f"Link: {resource.link}\n"
+        response += f"Link: {resource.website}\n"
 
         return response
     
