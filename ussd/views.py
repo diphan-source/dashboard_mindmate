@@ -59,6 +59,30 @@ class UssdView(View):
             self.response = self.get_exit()
         elif self.text == "1*1":
             self.response = self.handle_resource()
+        elif self.text == "1*2":
+            self.response = self.handle_resource_2()
+        elif self.text == "1*3":
+            self.response = self.handle_resource_3()
+        elif self.text == "2*1":
+            self.response = self.handle_therapist()
+        elif self.text == "2*2":
+            self.response = self.handle_therapist_2()
+        elif self.text == "2*3":
+            self.response = self.handle_therapist_3()
+        elif self.text == "3*1":
+            self.response = self.handle_psychiatrist()
+        elif self.text == "3*2":
+            self.response = self.handle_psychiatrist_2()
+        elif self.text == "4*1":
+            self.response = self.handle_mental_health_provider()
+        elif self.text == "4*2":
+            self.response = self.handle_mental_health_provider_2()
+        elif self.text == "4*3":
+            self.response = self.handle_mental_health_provider_3()
+        else:
+            self.response = self.get_home()
+        
+        
 
         return HttpResponse(self.response, content_type='text/plain')
 
@@ -191,29 +215,119 @@ class UssdView(View):
         for mental_health_provider in mental_health_providers:
             response += f"{mental_health_provider.id}. {mental_health_provider.name}\n"
 
-        response += f"{GO_BACK}. Go Back"
+        # response += f"{GO_BACK}. Go Back"
 
         return response
+    
+    def handle_mental_health_provider(self):
+        mentalprovider = MentalHealthProvider.objects.filter(id=self.text.split('*')[-1]).first()
+        if mentalprovider is None:
+            return "END Sorry, we could not find the mental health provider you are looking for"
+        send_sms("Hello, Thank you for using MindMate and we are here for you {mentalprovider.name} \n {mentalprovider.contact}", self.phone_number)
+        response = "END You can contact the mental health provider for counselling on the following details\n"
+        response += f"Name: {mentalprovider.name}\n"
+        response += f"Phone Number: {mentalprovider.contact}\n"
+        response += f"here for you !!\n "
+        
+        return response
+    
+    def handle_mental_health_provider_2(self):
+        mentalprovider = MentalHealthProvider.objects.filter(id=self.text.split('*')[-1]).first()
+        if mentalprovider is None:
+            return "END Sorry, we could not find the mental health provider you are looking for"
+        
+        send_sms("Hello, Thank you for using MindMate and we are here for you {mentalprovider.name} \n {mentalprovider.contact} \n {mentalprovider.field}", self.phone_number)
+        response = "END You can contact the mental health provider for treatment on the following details\n"
+        response += f"Name: {mentalprovider.name}\n"
+        response += f"Phone Number: {mentalprovider.contact}\n"
+        response += f"website : {mentalprovider.website}\n"
+        
+        return response
+    
+    def handle_mental_health_provider_3(self):
+        mentalprovider = MentalHealthProvider.objects.filter(id=self.text.split('*')[-1]).first()
+        if mentalprovider is None:
+            return "END Sorry, we could not find the mental health provider you are looking for"
+        
+        send_sms("Hello, Thank you for using MindMate and we are here for you {mentalprovider.name} \n {mentalprovider.contact} \n {mentalprovider.field}", self.phone_number)
+        response = "END You can contact the mental health provider for support on the following details\n"
+        response += f"Name: {mentalprovider.name}\n"
+        response += f"Phone Number: {mentalprovider.contact}\n"
+        response += f"website : {mentalprovider.website}\n"
+        response += f"here for you !!\n "
+        
+        return response
+        
 
     
     def handle_therapist(self):
         therapist = Therapist.objects.filter(id=self.text.split('*')[-1]).first()
-        response = "END You can contact the therapist on the following details\n"
+        if therapist is None:
+            return "END Sorry, we could not find the therapist you are looking for"
+        
+        send_sms("Hello, Thank you for using MindMate and we are here for you {therapist.name} \n {therapist.contact}", self.phone_number)
+        response = "END You can contact the therapist on the following details for Counselling\n"
         response += f"Name: {therapist.name}\n"
         response += f"Phone Number: {therapist.contact}\n"
 
+        return 
+    
+    def handle_therapist_2(self):
+        therapist = Therapist.objects.filter(id=self.text.split('*')[-1]).first()
+        if therapist is None:
+            return "END Sorry, we could not find the therapist you are looking for"
+        
+        send_sms("Hello, Thank you for using MindMate and we are here for you {therapist.name} \n {therapist.contact}", self.phone_number)
+        response = "END You can contact the therapy on the following details for Psychotherapy\n"
+        response += f"Name: {therapist.name}\n"
+        response += f"Phone Number: {therapist.contact}\n"
+        response += f"you are not alone: your mental health matters\n"
+        
         return response
+    
+    def handle_therapist_3(self):
+        therapist = Therapist.objects.filter(id=self.text.split('*')[-1]).first()
+        if therapist is None:
+            return "END Sorry, we could not find the therapist you are looking for"
+        
+        send_sms("Hello, Thank you for using MindMate and we are here for you {therapist.name} \n {therapist.contact}", self.phone_number)
+        response = "END You can contact the therapist on the following details for Art Therapy\n"
+        response += f"Name: {therapist.name}\n"
+        response += f"Phone Number: {therapist.contact}\n"
+        response += f"you are not alone: Art therapy heals and helps in recovery\n"
     
     def handle_psychiatrist(self):
         psychiatrist = Psychiatrists.objects.filter(id=self.text.split('*')[-1]).first()
+        if psychiatrist is None:
+            return "END Sorry, we could not find the psychiatrist you are looking for"
+        
+        send_sms(f"Hello, Thank you for using MindMate and we are here for you {psychiatrist.name}", self.phone_number) 
         response = "END You can contact the psychiatrist on the following details\n"
         response += f"Name: {psychiatrist.name}\n"
         response += f"Phone Number: {psychiatrist.contact}\n"
 
         return response
     
+    def handle_psychiatrist_2(self):
+        psychiatrist = Psychiatrists.objects.filter(id=self.text.split('*')[-1]).first()
+        if psychiatrist is None:
+            return "END Sorry, we could not find the psychiatrist you are looking for"
+        
+        send_sms(f"Hello, Thank you for using MindMate and we are here for you {psychiatrist.name}", self.phone_number)
+        response = "END You can contact the psychiatrist on the following details\n"
+        response += f"Name: {psychiatrist.name}\n"
+        response += f"Phone Number: {psychiatrist.contact}\n"
+        response += f"you are not alone: your mental health matters\n"
+            
+        return response
+    
+    
     def handle_mental_health_provider(self):
         mental_health_provider = MentalHealthProvider.objects.filter(id=self.text.split('*')[-1]).first()
+        if mental_health_provider is None:
+            return "END Sorry, we could not find the mental health provider you are looking for"
+        
+        send_sms(f"Hello, Thank you for using MindMate and we are here for you {mental_health_provider.name}", self.phone_number)
         response = "END You can contact the mental health provider on the following details\n"
         response += f"Name: {mental_health_provider.name}\n"
         response += f"Phone Number: {mental_health_provider.contact}\n"
@@ -225,12 +339,33 @@ class UssdView(View):
         if resource is None:
             return "END Sorry, we could not find the resource you are looking for"
 
-        send_sms(f"Hello, Thank you for using MindMate and we are here for you {resource.description}", self.phone_number)
+        send_sms(f"Hello, Thank you for using MindMate and we are here for you {resource.description}\n{resource.website}", self.phone_number)
         response = "END You can access the resource on the following details\n"
-        response += f"Name: {resource.description}\n"
+        response += f"Name: {resource.name}\n"
         response += f"Link: {resource.website}\n"
 
         return response
     
-
+    def handle_resource_2(self):
+        resource = Resource.objects.filter(id=self.text.split("*")[-1]).first()
+        if resource is None:
+            return "END Sorry , we could not find the resource you are looking for"
+        
+        send_sms(f"Hello , Thank you for using MindMate and we are here for you {resource.website}", self.phone_number)
+        response = "END You can access the resource on the following details\n"
+        response += f"Name: {resource.name}\n"
+        response += f"Link: {resource.website}\n"
+        
+        return response
+        
+    def handle_resource_3(self):
+        resource = Resource.objects.filter(id=self.text.split("*")[-1]).first()
+        if resource is None:
+            return "END Sorry , we could not find the resource you are looking for"
+        
+        send_sms(f"Hello , Thank you for using MindMate and we are here for you {resource.website}\n {resource.description}", self.phone_number)
+        response = "END You can access the resource on the following details\n"
+        response += f"Name: {resource.name}\n"
+        response += f"Link: {resource.website}\n"
+        response += f"Description: {resource.description}\n"
 
